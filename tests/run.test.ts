@@ -10,3 +10,15 @@ test ('it calculates pieces from a given length', () => {
 
     expect(new Run(480).calculatePieces()).toStrictEqual(testRun);
 });
+
+test ('it calculates pieces with optional parameters', () => {
+    const testRun = [
+        { start: 0, end: 120, length: 120 },
+        { start: 97.5, end: 217.5, length: 120 },
+        { start: 195, end: 315, length: 120 },
+        { start: 292.5, end: 412.5, length: 120 },
+        { start: 390, end: 480, length: 90 },
+    ];
+
+    expect(new Run(480, 0.375, 120, 60).calculatePieces()).toStrictEqual(testRun);
+});
