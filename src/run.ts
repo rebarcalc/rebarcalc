@@ -10,34 +10,36 @@ export default class Run {
     }
 
     calculatePieces = () => {
-        const effectiveLength: number = this.length + this.lap;
-        const pieceCount: number = Math.floor(effectiveLength / (this.maxLength - this.lap));
+        if (this.maxLength <= this.lap) {
+            throw new Error("maxLength must be greater than lap.");
+        }
+
         const pieces: { start: number, end: number, length: number }[] = [];
 
-        let currentStart: number = 0;
+        let currentLength: number = 0;
 
-        for (let i = 0; i < pieceCount; i++) {
-            const currentEnd: number = currentStart + this.maxLength;
+        while (currentLength < this.length) {
+            const nextPieceLength: number = Math.min(this.maxLength, this.length - currentLength);
+            const startPosition: number = currentLength;
+            const endPosition: number = startPosition + nextPieceLength;
 
             pieces.push({
-                start: currentStart,
-                end: currentEnd,
-                length: this.maxLength
+                start: startPosition,
+                end: endPosition,
+                length: nextPieceLength
             });
 
-            currentStart = currentEnd - this.lap;
+            currentLength += nextPieceLength;
+
+            if (currentLength < this.length) {
+                currentLength -= this.lap;
+            }
+    
+            if (currentLength < 0) {
+                currentLength = 0;
+            }
         }
 
-        const remainder = this.length % (this.maxLength - this.lap);
-
-        if (remainder > 0) {
-            pieces.push({
-                start: currentStart,
-                end: currentStart + remainder,
-                length: remainder
-            });
-        }
-
-        return pieces;
+        return pieces;            
     }
 }
