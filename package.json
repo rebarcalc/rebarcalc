@@ -1,0 +1,17 @@
+{
+    "name": "rebarcalc",
+    "version": "0.1.0",
+    "description": "Calculates the size and quantity of rebar pieces in a given mat.",
+    "license": "MIT",
+    "contributors": [
+        "Jeff Kieke",
+        "Micah Harwell"
+    ],
+    "type": "module",
+    "scripts": {
+        "build": "tsc"
+    },
+    "dependencies": {
+        "typescript": "^5.7.3"
+    }
+}
