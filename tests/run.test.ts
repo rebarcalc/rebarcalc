@@ -22,3 +22,13 @@ test ('it calculates pieces with optional parameters', () => {
 
     expect(new Run(480, 0.375, 120, 60).calculatePieces()).toStrictEqual(testRun);
 });
+
+test ('it throws if maxLength is equal to or less than lap length', () => {
+    expect(() => new Run(40, 0.5, 20).calculatePieces()).toThrowError(
+        /^maxLength must be greater than lap.$/, 
+    );
+
+    expect(() => new Run(20, 0.5, 15).calculatePieces()).toThrowError(
+        /^maxLength must be greater than lap.$/, 
+    );
+});
