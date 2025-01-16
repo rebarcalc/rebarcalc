@@ -1,5 +1,6 @@
-import Run from './run.js';
+import { RunSpec } from './types';
+import RunSet from './runset';
 
-export const calculateRun = (length: number, diameter: number, maxLength: number, lappingFactor: number) => {
-    return new Run(length, diameter, maxLength, lappingFactor).calculatePieces();
+export const calculateRunSet = (orthogonalLength: number, orthogonalSpacing: number, runSpec: RunSpec) => {
+    return new RunSet(orthogonalLength, orthogonalSpacing, runSpec).calculateRuns();
 }
