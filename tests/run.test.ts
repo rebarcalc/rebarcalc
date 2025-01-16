@@ -8,7 +8,7 @@ test ('it calculates pieces from a given length', () => {
         { start: 440, end: 480, length: 40 }
     ];
 
-    expect(new Run(480).calculatePieces()).toStrictEqual(testRun);
+    expect(new Run({ length: 480 }).calculatePieces()).toStrictEqual(testRun);
 });
 
 test ('it calculates pieces with optional parameters', () => {
@@ -20,15 +20,15 @@ test ('it calculates pieces with optional parameters', () => {
         { start: 390, end: 480, length: 90 },
     ];
 
-    expect(new Run(480, 0.375, 120, 60).calculatePieces()).toStrictEqual(testRun);
+    expect(new Run({ length: 480, diameter: 0.375, maxLength: 120, lappingFactor: 60 }).calculatePieces()).toStrictEqual(testRun);
 });
 
 test ('it throws if maxLength is equal to or less than lap length', () => {
-    expect(() => new Run(40, 0.5, 20).calculatePieces()).toThrowError(
+    expect(() => new Run({ length: 40, diameter: 0.5, maxLength: 20 }).calculatePieces()).toThrowError(
         /^maxLength must be greater than lap.$/, 
     );
 
-    expect(() => new Run(20, 0.5, 15).calculatePieces()).toThrowError(
+    expect(() => new Run({ length: 20, diameter: 0.5, maxLength: 15 }).calculatePieces()).toThrowError(
         /^maxLength must be greater than lap.$/, 
     );
 });

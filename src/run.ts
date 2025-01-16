@@ -1,9 +1,11 @@
+import { RunSpec } from './types';
+
 export default class Run {
     length: number;
     maxLength: number;
     lap: number;
 
-    constructor(length: number, diameter: number = 0.5, maxLength: number = 240, lappingFactor: number = 40) {
+    constructor({length, diameter = 0.5, maxLength = 240, lappingFactor = 40}: RunSpec) {
         this.length = length;
         this.maxLength = maxLength;
         this.lap = diameter * lappingFactor;
