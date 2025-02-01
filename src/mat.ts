@@ -7,7 +7,6 @@ export default class Mat {
     constructor(matSpec: MatSpec) {
         this.matSpec = matSpec;
     }
-
    
     calculateRunSets = () => {
         const runSets: { xRunSet: Runs[], yRunSet: Runs[] } = {
@@ -19,6 +18,5 @@ export default class Mat {
         runSets['yRunSet'] = new RunSet(this.matSpec.xLength, this.matSpec.xSpacing, { length: this.matSpec.yLength, maxLength: this.matSpec.maxLength }).calculateRuns();
 
         return runSets;
-
     }
 }
