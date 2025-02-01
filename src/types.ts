@@ -1,3 +1,13 @@
+export interface MatSpec {
+    xLength: number;
+    yLength: number;
+    xSpacing: number;
+    ySpacing: number;
+    diameter?: number;
+    maxLength?: number;
+    lappingFactor?: number;
+}
+
 export interface RunSpec {
     length: number;
     diameter?: number;
@@ -12,3 +22,8 @@ export interface Piece {
 }
 
 export type Pieces = Piece[];
+
+export interface Runs {
+    offset: number;
+    run: Pieces;
+}
