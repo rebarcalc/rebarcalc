@@ -1,38 +1,26 @@
-import { RunSpec, Pieces } from './types';
-import Run from './run.js';
+import { Run, createRuns } from './Run';
 
-export default class RunSet {
+export interface RunSet {
+    direction: number;
+    runs: Run[];
+}
+
+interface Params {
+    direction: number;
     orthogonalLength: number;
     orthogonalSpacing: number;
-    runSpec: RunSpec;
+    length: number;
+    maxPieceLength?: number;
+    lap?: number;
+}
 
-    constructor(orthogonalLength: number, orthogonalSpacing: number, runSpec: RunSpec) {
-        this.orthogonalLength = orthogonalLength;
-        this.orthogonalSpacing = orthogonalSpacing;
-        this.runSpec = runSpec;
-    }
+export const createRunSet = ({ direction, orthogonalLength, orthogonalSpacing, length, maxPieceLength = 240, lap = 20 }: Params): RunSet => {
+    const runs = createRuns({ orthogonalLength, orthogonalSpacing, length, maxPieceLength, lap });
 
-    calculateRuns = () => {
-        if (this.orthogonalLength <= 0 || this.orthogonalSpacing <= 0) {
-            return [];
-        }
+    const runSet: RunSet = {
+        direction: direction,
+        runs: runs
+    };
 
-        const runs: { offset: number, run: Pieces }[] = [];
-
-        const runCount: number = Math.floor(this.orthogonalLength / this.orthogonalSpacing) + 1;
-        const start: number = (this.orthogonalLength - (runCount - 1) * this.orthogonalSpacing) /2 ;
-      
-        for (let i = 1; i <= runCount; i++) {
-            const offset: number = start + (i - 1) * this.orthogonalSpacing;
-    
-            const run = new Run(this.runSpec).calculatePieces();
-
-            runs.push({
-                offset: offset,
-                run: run
-            });
-        }
-    
-        return runs;
-    }
+    return runSet;
 }

@@ -1,22 +1,47 @@
-import { Runs, MatSpec } from './types';
-import RunSet from './runset.js';
+import { RunSet, createRunSet } from './RunSet';
 
-export default class Mat {
-    matSpec: MatSpec;
+export interface Mat {
+    runSets: RunSet[];
+}
 
-    constructor(matSpec: MatSpec) {
-        this.matSpec = matSpec;
-    }
-   
-    calculateRunSets = () => {
-        const runSets: { xRunSet: Runs[], yRunSet: Runs[] } = {
-            xRunSet: [],
-            yRunSet: []
-        };
+interface Params {
+    xLength: number;
+    yLength: number;
+    xSpacing: number;
+    ySpacing: number;
+    maxPieceLength?: number;
+    diameter?: number;
+    lappingFactor?: number;
+}
 
-        runSets['xRunSet'] = new RunSet(this.matSpec.yLength, this.matSpec.ySpacing, { length: this.matSpec.xLength, maxLength: this.matSpec.maxLength }).calculateRuns();
-        runSets['yRunSet'] = new RunSet(this.matSpec.xLength, this.matSpec.xSpacing, { length: this.matSpec.yLength, maxLength: this.matSpec.maxLength }).calculateRuns();
+export const createMat = ({ xLength, yLength, xSpacing, ySpacing, maxPieceLength = 240, diameter = 0.5, lappingFactor = 40 }: Params): Mat => {
+    const lap: number = diameter * lappingFactor;
 
-        return runSets;
-    }
+    const mat: Mat = {
+        runSets: []
+    };
+
+    mat.runSets.push(
+        createRunSet({
+            direction: 0,
+            orthogonalLength: yLength,
+            orthogonalSpacing: ySpacing,
+            length: xLength,
+            maxPieceLength: maxPieceLength,
+            lap: lap
+        })
+    );
+
+    mat.runSets.push(
+        createRunSet({
+            direction: 90,
+            orthogonalLength: xLength,
+            orthogonalSpacing: xSpacing,
+            length: yLength,
+            maxPieceLength: maxPieceLength,
+            lap: lap
+        })
+    );
+
+    return mat;
 }

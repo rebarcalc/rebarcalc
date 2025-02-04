@@ -1,47 +1,38 @@
-import { RunSpec } from './types';
+import { Piece, createPieces } from './Piece';
 
-export default class Run {
-    length: number;
-    maxLength: number;
-    lap: number;
-
-    constructor({length, diameter = 0.5, maxLength = 240, lappingFactor = 40}: RunSpec) {
-        this.length = length;
-        this.maxLength = maxLength;
-        this.lap = diameter * lappingFactor;
-    }
-
-    calculatePieces = () => {
-        if (this.maxLength <= this.lap) {
-            throw new Error("maxLength must be greater than lap.");
-        }
-
-        const pieces: { start: number, end: number, length: number }[] = [];
-
-        let currentLength: number = 0;
-
-        while (currentLength < this.length) {
-            const nextPieceLength: number = Math.min(this.maxLength, this.length - currentLength);
-            const startPosition: number = currentLength;
-            const endPosition: number = startPosition + nextPieceLength;
-
-            pieces.push({
-                start: startPosition,
-                end: endPosition,
-                length: nextPieceLength
-            });
-
-            currentLength += nextPieceLength;
-
-            if (currentLength < this.length) {
-                currentLength -= this.lap;
-            }
-    
-            if (currentLength < 0) {
-                currentLength = 0;
-            }
-        }
-
-        return pieces;            
-    }
+export interface Run {
+    offset: number;
+    pieces: Piece[];
 }
+
+interface Params {
+    orthogonalLength: number;
+    orthogonalSpacing: number;
+    length: number;
+    maxPieceLength?: number;
+    lap?: number;
+}
+
+export const createRuns = ({ orthogonalLength, orthogonalSpacing, length, maxPieceLength = 240, lap = 20 }: Params): Run[] => {
+    if (orthogonalLength <= 0 || orthogonalSpacing <= 0) {
+        return [];
+    }
+
+    const runs: Run[] = [];
+
+    const runCount: number = Math.floor(orthogonalLength / orthogonalSpacing) + 1;
+    const start: number = (orthogonalLength - (runCount - 1) * orthogonalSpacing) / 2 ;
+    
+    for (let i = 1; i <= runCount; i++) {
+        const offset: number = start + (i - 1) * orthogonalSpacing;
+
+        const piece = createPieces({ length, maxPieceLength, lap });
+
+        runs.push({
+            offset: offset,
+            pieces: piece
+        });
+    }
+
+    return runs;
+};
