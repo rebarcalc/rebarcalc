@@ -1,4 +1,4 @@
-import { RunSet, createRunSet } from './RunSet';
+import { RunSet, createRunSet } from './RunSet.js';
 
 export interface Mat {
     runSets: RunSet[];

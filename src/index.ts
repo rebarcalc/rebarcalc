@@ -1,1 +1,1 @@
-export { Mat, createMat } from './Mat';
+export { Mat, createMat } from './Mat.js';

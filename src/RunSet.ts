@@ -1,4 +1,4 @@
-import { Run, createRuns } from './Run';
+import { Run, createRuns } from './Run.js';
 
 export interface RunSet {
     direction: number;

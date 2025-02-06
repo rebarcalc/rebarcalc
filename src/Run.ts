@@ -1,4 +1,4 @@
-import { Piece, createPieces } from './Piece';
+import { Piece, createPieces } from './Piece.js';
 
 export interface Run {
     offset: number;
