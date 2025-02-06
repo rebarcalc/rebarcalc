@@ -1,6 +1,6 @@
 {
     "name": "rebarcalc",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "Calculates the size and quantity of rebar pieces in a given mat.",
     "homepage": "https://github.com/rebarcalc/rebarcalc",
     "type": "module",
