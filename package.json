@@ -2,18 +2,38 @@
     "name": "rebarcalc",
     "version": "0.1.0",
     "description": "Calculates the size and quantity of rebar pieces in a given mat.",
+    "homepage": "https://github.com/rebarcalc/rebarcalc",
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/rebarcalc/rebarcalc"
+    },
     "license": "MIT",
     "contributors": [
         "Jeff Kieke",
         "Micah Harwell"
     ],
-    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist/**/*",
+        "README.md",
+        "LICENSE"
+    ],
     "scripts": {
-        "build": "tsc",
+        "watch": "rm -rf dist && tsc --watch --preserveWatchOutput",
+        "build": "rm -rf dist && tsc",
+        "typeCheck": "tsc --noEmit",
+        "prepublishOnly": "npm run build",
+        "lint": "eslint ./src ./tests",
         "test": "vitest run"
     },
     "devDependencies": {
+        "@eslint/js": "^9.19.0",
+        "eslint": "^9.19.0",
+        "globals": "^15.14.0",
         "typescript": "^5.7.3",
+        "typescript-eslint": "^8.23.0",
         "vite": "^6.0.5",
         "vitest": "^2.1.9"
     }
